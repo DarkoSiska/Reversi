@@ -4,15 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Window {
-    public Window() {
-        JFrame okno = new JFrame();
-        okno.setSize(800, 600);
-        okno.setVisible(true);
-        //okno.setResizable(false);
-        okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel dolnyPanel = new NorthPanel();
+    private JFrame window;
 
-        okno.add(dolnyPanel, BorderLayout.NORTH);
-        //okno.pack();
+    public void setWindow(JFrame window) {
+        this.window = window;
+    }
+
+    public Window() {
+        setWindow(new JFrame());
+        window.setSize(800, 800);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Game game = new Game(window);
+        window.add(game, BorderLayout.NORTH);
+        window.setVisible(true);
     }
 }
