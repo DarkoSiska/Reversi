@@ -119,7 +119,7 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener 
         for (int i = 0; i < dimensions; i++) {
             for (int j = 0; j < dimensions; j++) {
                 decideColor(g, i, j);
-                g.fillRect(i*r.width/dimensions, j* r.height/dimensions, r.width/dimensions, r.height/dimensions);
+                g.fillRect(i*r.width/dimensions, j* r.height/dimensions, r.width/dimensions, r.height/dimensions+1);
                 if (getTileBoard()[i][j].isPlayable()) {
                     g.setColor(Color.LIGHT_GRAY);
                     smallCircle(g, dimensions, r, i, j);
