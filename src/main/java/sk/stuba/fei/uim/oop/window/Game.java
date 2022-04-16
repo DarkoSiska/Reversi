@@ -38,19 +38,11 @@ public class Game extends JPanel implements ActionListener {
         }
         comboBox.setSelectedIndex(1);
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                restartButton(window, getDimensions());
-            }
-        });
+        button1.addActionListener(e -> restartButton(window, getDimensions()));
         button2.addActionListener(this);
-        comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ((int)comboBox.getSelectedItem() != board.getBoardDimensions()) {
-                    restartButton(window, (int)comboBox.getSelectedItem());
-                }
+        comboBox.addActionListener(e -> {
+            if ((int)comboBox.getSelectedItem() != board.getBoardDimensions()) {
+                restartButton(window, (int)comboBox.getSelectedItem());
             }
         });
         this.add(boardDimensions);

@@ -115,7 +115,7 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener 
     }
 
     private void paintBoard(Graphics g, int dimensions) {
-        Dimension r = super.getSize();
+        Dimension r = this.getSize();
         for (int i = 0; i < dimensions; i++) {
             for (int j = 0; j < dimensions; j++) {
                 decideColor(g, i, j);
@@ -195,46 +195,46 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener 
 
     private void mouseClickedMethod(MouseEvent e) {
         setNewXYCoordinate(valueXY(e));
-        if (checkPlayable(this, PlayerColor.BLACK) || checkPlayable(this, PlayerColor.WHITE)) {
-            boolean blackPlayed = false;
-            if (checkPlayable(this, PlayerColor.BLACK)) {
-                if (getTileBoard()[getNewXYCoordinate()[0]][getNewXYCoordinate()[1]].isPlayable() && e.getButton() == 1) {
-                    checkPlayable(this, PlayerColor.BLACK);
-                    tilePlayed(this, getTileBoard()[getNewXYCoordinate()[0]][getNewXYCoordinate()[1]], PlayerColor.BLACK);
-                    repaint();
-                    blackPlayed = true;
+        if ((getTileBoard()[getNewXYCoordinate()[0]][getNewXYCoordinate()[1]].isPlayable() && e.getButton() == 1) || (!checkPlayable(this, PlayerColor.BLACK) && checkPlayable(this, PlayerColor.WHITE))) {
+            if (checkPlayable(this, PlayerColor.BLACK) || checkPlayable(this, PlayerColor.WHITE)) {
+                if (checkPlayable(this, PlayerColor.BLACK)) {
+                    if (getTileBoard()[getNewXYCoordinate()[0]][getNewXYCoordinate()[1]].isPlayable() && e.getButton() == 1) {
+                        checkPlayable(this, PlayerColor.BLACK);
+                        tilePlayed(this, getTileBoard()[getNewXYCoordinate()[0]][getNewXYCoordinate()[1]], PlayerColor.BLACK);
+                        repaint();
+                    }
                 }
-            }
-            if (checkPlayable(this, PlayerColor.WHITE)) {
-                checkPlayable(this, PlayerColor.WHITE);
-                tilePlayed(this, getTileBoard()[getBiggestChainCords()[0]][getBiggestChainCords()[1]], PlayerColor.WHITE);
-                checkPlayable(this, PlayerColor.BLACK);
-                repaint();
-            }
-            if (!blackPlayed && !checkPlayable(this, PlayerColor.BLACK)) {
-                System.out.println("NO LEGAL MOVE");
-            }
-            if (!checkPlayable(this, PlayerColor.WHITE) && blackPlayed) {
-                System.out.println("PC HAS NO LEGAL MOVE");
                 if (checkPlayable(this, PlayerColor.WHITE)) {
                     checkPlayable(this, PlayerColor.WHITE);
                     tilePlayed(this, getTileBoard()[getBiggestChainCords()[0]][getBiggestChainCords()[1]], PlayerColor.WHITE);
                     checkPlayable(this, PlayerColor.BLACK);
                     repaint();
                 }
+                if (!checkPlayable(this, PlayerColor.BLACK)) {
+                    System.out.println("NO LEGAL MOVE");
+                }
+                if (!checkPlayable(this, PlayerColor.WHITE)) {
+                    System.out.println("PC HAS NO LEGAL MOVE");
+                    if (checkPlayable(this, PlayerColor.WHITE)) {
+                        checkPlayable(this, PlayerColor.WHITE);
+                        tilePlayed(this, getTileBoard()[getBiggestChainCords()[0]][getBiggestChainCords()[1]], PlayerColor.WHITE);
+                        checkPlayable(this, PlayerColor.BLACK);
+                        repaint();
+                    }
+                }
             }
-        }
-        if (!checkPlayable(this, PlayerColor.BLACK) && !checkPlayable(this, PlayerColor.WHITE)) {
-            if (getBlackPawns() > getWhitePawns()) {
-                System.out.println("Winner: Black (" + getBlackPawns() + ")");
-            }
-            if (getBlackPawns() < getWhitePawns()) {
-                System.out.println("Winner: White (" + getWhitePawns() + ")");
-            }
-            if (getWhitePawns() == getBlackPawns()) {
-                System.out.println("IT'S A DRAW");
-                System.out.println("BLACK PAWNS: " + getBlackPawns());
-                System.out.println("WHITE PAWNS: " + getWhitePawns());
+            if (!checkPlayable(this, PlayerColor.BLACK) && !checkPlayable(this, PlayerColor.WHITE)) {
+                if (getBlackPawns() > getWhitePawns()) {
+                    System.out.println("Winner: Black (" + getBlackPawns() + ")");
+                }
+                if (getBlackPawns() < getWhitePawns()) {
+                    System.out.println("Winner: White (" + getWhitePawns() + ")");
+                }
+                if (getWhitePawns() == getBlackPawns()) {
+                    System.out.println("IT'S A DRAW");
+                    System.out.println("BLACK PAWNS: " + getBlackPawns());
+                    System.out.println("WHITE PAWNS: " + getWhitePawns());
+                }
             }
         }
     }
@@ -252,7 +252,7 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener 
             setOldXCoordinate(newXYCoordinate[0]);
             setOldYCoordinate(newXYCoordinate[1]);
             getTileBoard()[newXYCoordinate[0]][newXYCoordinate[1]].setMouseOver(true);
-            this.repaint();
+            repaint();
         }
     }
 
